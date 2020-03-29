@@ -28,7 +28,7 @@ router.post('/login', function(req, res, next) {
             // console.log('success');
             const token = jwt.sign({
                     name: req.body.username, //需要放到token的参数
-                    exp: Math.floor(Date.now() / 1000) + 30,
+                    exp: Math.floor(Date.now() / 1000) + 3600 * 3,
                 },
                 'suzhen', //随便一点内容，加密的密文，私钥对应着公钥
             )
