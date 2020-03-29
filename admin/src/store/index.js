@@ -8,7 +8,13 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        loading: false
+        loading: false,
+        inputMsg: false
+    },
+    mutations: {
+        clearMsg(state, param) {
+            state.inputMsg = param;
+        }
     },
     modules: {
         user

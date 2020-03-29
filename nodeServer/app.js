@@ -8,6 +8,7 @@ require('./db/connent.js');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var articleRouter = require('./routes/article.js');
 
 var app = express();
 
@@ -57,18 +58,6 @@ app.use(async(req, res, next) => {
     }
 })
 
-//定义一个接口，返回token给客户端
-app.get('/getUserInfo', function(req, res) {
-    var username = 'admin'
-    var token = jwt.sign({ name: username }, secret, {
-        expiresIn: 900 // token 过期销毁时间设置
-    });
-    res.json({
-        token: token
-    })
-})
-
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -81,6 +70,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/articles', articleRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

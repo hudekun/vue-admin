@@ -11,8 +11,8 @@
         </el-col>
         </div>
         <el-col class="fr" :span="6">
+        <div class="fr_msg">{{msg}}</div>
         <el-button type="primary" size="small" @click="loginOut()">退出</el-button>
-        <el-button type="primary" size="small" @click="handelsiger()">click</el-button>
          </el-col>
       </el-header>
       <el-container>
@@ -32,6 +32,7 @@
 <script>
 import SidebarItem from "./conponents/sidebarItem";
 import BreadItem from "./conponents/breadcrumb";
+import {mapState} from 'vuex'
 export default {
   components: { BreadItem ,SidebarItem  },
   data() {
@@ -40,8 +41,13 @@ export default {
       flag:false,
       menueList: [
         {
-          path: "/authority", //菜单项所对应的路由路径
-          title: "权限管理", //菜单项名称
+          path: "/articleList", //菜单项所对应的路由路径
+          title: "文章列表", //菜单项名称
+          children: [] //是否有子菜单，若没有，则为[]
+        },
+        {
+          path: "/writeArticle", //菜单项所对应的路由路径
+          title: "写文章", //菜单项名称
           children: [] //是否有子菜单，若没有，则为[]
         },
         {
@@ -68,15 +74,19 @@ export default {
       ]
     };
   },
+  computed: {
+        ...mapState({
+            loading: state=>state.loading,
+            msg: state=>state.user.msg
+        })
+  },
   methods: {
     loginOut() {
       window.sessionStorage.removeItem("token");
+       window.sessionStorage.removeItem("username");
       this.$router.push("/login");
     },
-    handelsiger() {
-      console.log('click');
-      
-    },
+  
     handelCal() {
       this.icons = 'el-icon-s-unfold'
       this.flag = !this.flag
@@ -119,6 +129,12 @@ export default {
   .fr{
     display: flex;
     justify-content:flex-end;
+    .fr_msg{
+      display: flex;
+      align-items: center;
+      color: white;
+      padding: 0 10px;
+    }
   }
   .border_Right{
     border-right: 1px solid #ccc;

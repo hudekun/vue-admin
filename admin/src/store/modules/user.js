@@ -16,8 +16,9 @@ const actions = {
                 window.sessionStorage.removeItem("token");
                 if (response.tokenI !== 'undefined') {
                     window.sessionStorage.setItem("token", response.tokenI);
+                    window.sessionStorage.setItem('username', response.username);
                 }
-                commit('SET_MSG', response.msg)
+                commit('SET_MSG', response.username)
                 resolve()
             }).catch(error => {
                 reject(error)

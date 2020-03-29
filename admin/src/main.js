@@ -7,8 +7,16 @@ Vue.use(VueParticles)
 
 import './assets/css/globel.css'
 import './plugin/element-ui'
+import Card from './components/card/index'
 
 
+import  VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+Vue.use(VueQuillEditor)
+
+Vue.component('card-btn', Card)
 
 Vue.config.productionTip = false
 

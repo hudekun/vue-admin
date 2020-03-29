@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var blogSchema = require('../db/users.js')
 var jwt = require('jsonwebtoken')
-const { createToken, checkToken } = require('../jwt/index.js')
+    // const { createToken, checkToken } = require('../jwt/index.js')
     /* GET users listing. */
 router.get('/', function(req, res, next) {
     // blogSchema.insertMany([{ username: 'hudekun', password: '123' }], function(error, docs) {
@@ -28,11 +28,11 @@ router.post('/login', function(req, res, next) {
             // console.log('success');
             const token = jwt.sign({
                     name: req.body.username, //需要放到token的参数
-                    exp: Math.floor(Date.now() / 1000) + 60,
+                    exp: Math.floor(Date.now() / 1000) + 30,
                 },
                 'suzhen', //随便一点内容，加密的密文，私钥对应着公钥
             )
-            res.json({ status: '200', tokenI: token });
+            res.json({ status: '200', tokenI: token, username: req.body.username });
         } else {
             res.json({ status: '200', msg: '查无此人' });
         }
