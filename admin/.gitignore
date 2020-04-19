@@ -1,0 +1,20 @@
+＃由https://www.gitignore.io/api/vue创建
+＃在https://www.gitignore.io/?templates=vue上编辑
+
+### Vue ###
+.DS_ *
+* .log
+日志
+** / *。backup。*
+**/*。背部。*
+
+node_modules
+bower_components
+
+*。升华*
+
+psd
+拇指
+草图
+
+＃https://www.gitignore.io/api/vue的结尾

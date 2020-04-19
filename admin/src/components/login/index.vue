@@ -89,12 +89,10 @@ export default {
       this.$refs.loginRef.validate(valid => {
         if (!valid) return this.$message.error("用户名密码错误");
          this.$store.dispatch('user/loginOn', this.loginRuleForm).then(res=>{
-           const token = window.sessionStorage.getItem("token");
-           if (token !== 'undefined') {
+           //const token = window.sessionStorage.getItem("token");
+           if (res.code == 1) {
             this.$router.push("/layout");
-            this.$message.success('欢迎回来');
-          }else{
-            this.$message.error(this.msg);
+             this.$message.success(res.msg);
           }
         })
       });

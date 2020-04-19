@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { MessageBox } from 'element-ui'
+import { MessageBox, Message } from 'element-ui'
 axios.interceptors.request.use(function(config) {
     // 在发送请求之前做些什么，例如加入token
     var token = window.sessionStorage.getItem('token')
@@ -28,6 +28,8 @@ axios.interceptors.response.use(function(response) {
                 message: '已取消'
             });
         });
+    } else if (res.status == '204') {
+        Message.error(res.msg)
     }
     // token验证,cookie时效性,store处理
     return res

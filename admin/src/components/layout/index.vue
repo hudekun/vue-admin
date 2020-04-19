@@ -10,7 +10,10 @@
           <el-button type="primary" :icon="icons" circle @click="handelCal()"></el-button>
         </el-col>
         </div>
-        <el-col class="fr" :span="6">
+        <el-col class="fr" :span="7">
+        <div @click="handelGoAvatar()">
+          <el-avatar icon="el-icon-user-solid" :src="imgUrl"></el-avatar>
+        </div>
         <div class="fr_msg">{{msg}}</div>
         <el-button type="primary" size="small" @click="loginOut()">退出</el-button>
          </el-col>
@@ -39,6 +42,7 @@ export default {
     return {
       icons:'el-icon-s-fold',
       flag:false,
+      circleUrl:'',
       menueList: [
         {
           path: "/articleList", //菜单项所对应的路由路径
@@ -74,19 +78,30 @@ export default {
       ]
     };
   },
+  
   computed: {
         ...mapState({
             loading: state=>state.loading,
-            msg: state=>state.user.msg
-        })
+            //msg: state=>state.user.username,
+            // imgUrl:state=>state.userimgUrl,
+        }),
+        msg(){
+          return this.$store.state.user.msg
+        },
+        imgUrl(){
+          return this.$store.state.user.avatar
+        }
   },
   methods: {
     loginOut() {
       window.sessionStorage.removeItem("token");
        window.sessionStorage.removeItem("username");
+       window.sessionStorage.removeItem("avatar");
       this.$router.push("/login");
     },
-  
+    handelGoAvatar(){
+      this.$router.push({path:'/showAvatar'})
+    },
     handelCal() {
       this.icons = 'el-icon-s-unfold'
       this.flag = !this.flag

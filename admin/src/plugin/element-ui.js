@@ -2,9 +2,11 @@ import Vue from 'vue'
 import {
     Button,
     Form,
+    Upload,
     FormItem,
     Input,
     Message,
+    Avatar,
     Link,
     Container,
     Header,
@@ -22,7 +24,8 @@ import {
 
 
 Vue.use(Button)
-    // Vue.use(MessageBox)
+Vue.use(Upload)
+Vue.use(Avatar)
 Vue.use(Card)
 Vue.use(Col)
 Vue.use(Container)

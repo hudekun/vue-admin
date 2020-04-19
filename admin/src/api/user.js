@@ -16,9 +16,17 @@ export function regist(data) {
     })
 }
 
-export function logout() {
+export function changeAvatar(data) {
     return request({
-        url: '/vue-element-admin/user/logout',
-        method: 'post'
+        url: '/upload',
+        method: 'post',
+        data
+    })
+}
+export function saveAvatar(data) {
+    return request({
+        url: '/users/avatar',
+        method: 'post',
+        data
     })
 }

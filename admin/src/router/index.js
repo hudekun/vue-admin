@@ -2,10 +2,13 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '../components/layout'
 import Login from '../components/login'
+import Avatar from '../components/avatar'
+
 import ArticleList from '../views/articleList/index'
 import WriteArticle from '../views/writeArticle/index'
 import ArticleListDetail from '../views/articleList/details/index'
 import Func31 from '../views/func31'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -42,6 +45,11 @@ const routes = [{
                 path: 'func31',
                 name: '菜单',
                 component: Func31
+            },
+            {
+                path: 'showAvatar',
+                name: '头像',
+                component: Avatar
             }
         ]
     }
@@ -53,7 +61,9 @@ const router = new VueRouter({
 })
 
 router.beforeEach(function(to, from, next) {
-    var token = window.sessionStorage.getItem('token')
+    var token = window.sessionStorage.getItem('token'),
+        avatar = window.sessionStorage.getItem('avatar'),
+        username = window.sessionStorage.getItem('username')
     if (to.name === 'login' && !token) { //如果是登录页，则跳过验证
         next() //必不可少
         return //以下的代码不执行
@@ -65,6 +75,9 @@ router.beforeEach(function(to, from, next) {
         if (to.name === 'login') {
             next({ name: 'layout' })
         } else {
+            if (avatar) {
+                store.commit('user/SET_MSG', { avatar, username })
+            }
             next() //如果已经登陆，那就可以跳转
         }
     }

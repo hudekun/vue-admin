@@ -18,12 +18,11 @@ const jwt = require('jsonwebtoken');
 
 
 app.use(async(req, res, next) => {
-    // let { url = '' } = ctx
-    console.log(req.url.indexOf('/users/login'));
-
-    if (req.url.indexOf('/users/login') == -1) { //除去登陆，注册，找回密码等接口其他的都需要验证
-        //需要校验登录态
-        // console.log(req.headers)
+    var reg = req.originalUrl.split('/');
+    if (req.url === '/users/login' || reg['1'].indexOf('upload') != -1) {
+        console.log('白名单');
+        await next()
+    } else {
         if (!req.headers.authorization) {
             return res.json({
                 status: 401,
@@ -53,9 +52,9 @@ app.use(async(req, res, next) => {
                 })
             }
         }
-    } else {
-        await next()
     }
+
+
 })
 
 // view engine setup
@@ -66,13 +65,21 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(__dirname + '/uploads'))
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/articles', articleRouter);
 
-// catch 404 and forward to error handler
+const multer = require('multer')
+const upload = multer({ dest: __dirname + '/uploads' })
+app.post('/upload', upload.single('file'), async(req, res) => {
+        const file = req.file
+        file.url = `http://localhost:3000/uploads/${file.filename}`
+        res.send(file)
+    })
+    // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));
 });
